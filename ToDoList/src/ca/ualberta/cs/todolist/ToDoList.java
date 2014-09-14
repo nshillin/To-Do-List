@@ -1,17 +1,19 @@
 package ca.ualberta.cs.todolist;
 
 import java.util.ArrayList;
-import java.util.Collection;
+//import java.util.Collection;
+import java.util.List;
 
 public class ToDoList {
 	
-	protected ArrayList<ToDoItem> toDoList;
+//	protected ArrayList<ToDoItem> toDoList;
+	protected List<ToDoItem> toDoList= new ArrayList<ToDoItem>();
 	
 	public ToDoList() {
 		toDoList = new ArrayList<ToDoItem>();
 	}
 	
-	public Collection<ToDoItem> getToDoList() {
+	public List<ToDoItem> getToDoList() {
 		return toDoList;
 	}
 	

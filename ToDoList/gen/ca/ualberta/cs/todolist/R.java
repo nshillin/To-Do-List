@@ -27,11 +27,13 @@ public final class R {
     public static final class id {
         public static final int ArchivedItemList_ListView=0x7f080000;
         public static final int ToDoList_ListView=0x7f080003;
-        public static final int action_settings=0x7f080004;
+        public static final int action_settings=0x7f080006;
         public static final int addItem_Button=0x7f080001;
         public static final int addItem_TextView=0x7f080002;
-        public static final int archivedItems_Item=0x7f080005;
-        public static final int email_Item=0x7f080006;
+        public static final int archivedItems_Item=0x7f080007;
+        public static final int checkBox=0x7f080004;
+        public static final int email_Item=0x7f080008;
+        public static final int itemName_TextView=0x7f080005;
     }
     public static final class layout {
         public static final int activity_archived_items=0x7f030000;

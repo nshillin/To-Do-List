@@ -1,13 +1,19 @@
 package ca.ualberta.cs.todolist;
 
 public class ToDoItem {
-	protected String todoitemName;
-	public ToDoItem(String todoitemName) {
-		this.todoitemName = todoitemName;
+	private String name;
+	private Boolean checked;
+	public ToDoItem(String name) {
+		this.name = name;
+		this.checked = false;
 	}
 
 	public String getName() {
-		return todoitemName;
+		return name;
+	}
+	
+	public Boolean isChecked() {
+		return checked;
 	}
 
 }

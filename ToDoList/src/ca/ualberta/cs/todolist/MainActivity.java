@@ -1,29 +1,36 @@
 package ca.ualberta.cs.todolist;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import android.R.integer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.content.Intent;
 
 public class MainActivity extends Activity {
+//	private List<ToDoItem> toDoList= new ArrayList<ToDoItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+  //      toDoList.add(new ToDoItem("test"));
+    	updateList();
     }
 
 
-    @Override
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -42,6 +49,22 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
     
+    public void updateList() {
+   /* 	ArrayList<ToDoItem> toDoList = ToDoListController.getToDoList().toDoList;
+    	String[] toDoArray = new String[toDoList.size()];
+		for (int i = 0; i < toDoList.size(); i++) {
+			ToDoItem x = toDoList.get(i);
+			toDoArray[i] = x.getName();
+		} 
+		ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(this, android.R.layout.select_dialog_singlechoice, toDoArray);
+    	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
+    	list.setAdapter(adapter); */
+    	
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter();
+    	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
+    	list.setAdapter(adapter);
+    }
+    
     public void archivedItems(MenuItem menu) {
     	Toast.makeText(this, "Archived Items", Toast.LENGTH_SHORT).show();
     	
@@ -55,21 +78,35 @@ public class MainActivity extends Activity {
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
     	todolistcontroller.addItem(todoitem);
-    	
- //   	ArrayAdapter<ToDoItem> adapter = new ArrayAdapter<ToDoItem>(this, R.layout.list_item, );
-    //	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, todolistcontroller.getToDoList());
-    	
-    	ArrayList<ToDoItem> toDoList = ToDoListController.getToDoList().toDoList;
-    //	String[] toDoArray = {"red", "blue"};
-    	String[] toDoArray = new String[toDoList.size()];
-		for (int i = 0; i < toDoList.size(); i++) {
-			ToDoItem x = toDoList.get(i);
-			toDoArray[i] = x.getName();
-		} 
-    //	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, todolistcontroller.getToDoList().toDoList);
-    //	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, toDoArray);
-		ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(this, android.R.layout.simple_list_item_1, toDoArray);
+    	updateList();
+    }
+  /*  
+    private void itemClicked() {
     	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
-    	list.setAdapter(adapter);
+		list.setOnItemClickListener(listener)
+	}
+*/
+
+    
+    private class ToDoAdapter extends ArrayAdapter<ToDoItem> {
+    	
+    	public ToDoAdapter() {
+    		super(MainActivity.this, R.layout.list_item, ToDoListController.getToDoList().getToDoList());
+    	}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View itemView = convertView;
+			if (itemView == null) {
+				itemView = getLayoutInflater().inflate(R.layout.list_item, parent, false);
+			}
+			
+		//	ToDoItem currentItem = toDoList.get(position);
+			
+			return itemView; 
+		}
+    	
+    	
+
     }
 }
