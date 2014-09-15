@@ -51,52 +51,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
     
-    public void updateList() {
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter();
-    	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
-    	list.setAdapter(adapter);
-    }
     
-    private class ToDoAdapter extends ArrayAdapter<ToDoItem> {
-    	
-    	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
-    	
-    	public ToDoAdapter() {
-    		super(MainActivity.this, R.layout.list_item, ToDoListController.getToDoList().getToDoList());
-    	}
-
-		@Override
-		public View getView(final int position, View convertView, ViewGroup parent) {
-			View itemView = convertView;
-			if (itemView == null) {
-				itemView = getLayoutInflater().inflate(R.layout.list_item, parent, false);
-			}
-			
-			ToDoItem currentItem = toDoList.get(position);
-			
-			TextView textView = (TextView) itemView.findViewById(R.id.itemName_TextView);
-			textView.setText(currentItem.getName());
-			
-			final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
-			checkBox.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
-					List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
-					ToDoItem currentItem = toDoList.get(position);
-					currentItem.changeChecked(checkBox.isChecked()); 
-			    	Toast.makeText(MainActivity.this, "hello", Toast.LENGTH_SHORT).show(); 
-				}
-			});
-			checkBox.setChecked(currentItem.isChecked());
-			
-			return itemView; 
-		}
-    	
-    	
-}
     
     public void archivedItems(MenuItem menu) {
     	Toast.makeText(this, "Archived Items", Toast.LENGTH_SHORT).show();
@@ -110,6 +65,7 @@ public class MainActivity extends Activity {
     	ToDoListController todolistcontroller = new ToDoListController();
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
+    	textView.setText("");
     	todolistcontroller.addItem(todoitem);
     	updateList();
     }
@@ -133,4 +89,10 @@ public class MainActivity extends Activity {
 			
 		});
 	}
+    
+    public void updateList() {
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, ToDoListController.getToDoList().getToDoList());
+    	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
+    	list.setAdapter(adapter);
+    }
 }
