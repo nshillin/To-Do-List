@@ -15,5 +15,9 @@ public class ToDoItem {
 	public Boolean isChecked() {
 		return checked;
 	}
+	
+	public void changeChecked(Boolean checked) {
+		this.checked = checked;
+	}
 
 }

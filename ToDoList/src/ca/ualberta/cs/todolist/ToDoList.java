@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ToDoList {
 	
-//	protected ArrayList<ToDoItem> toDoList;
 	protected List<ToDoItem> toDoList= new ArrayList<ToDoItem>();
 	
 	public ToDoList() {
