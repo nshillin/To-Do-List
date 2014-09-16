@@ -32,6 +32,8 @@ public final class R {
         public static final int addItem_TextView=0x7f080002;
         public static final int archivedItems_Item=0x7f080007;
         public static final int checkBox=0x7f080004;
+        public static final int emailAll_item=0x7f080009;
+        public static final int emailSelected_item=0x7f08000a;
         public static final int email_Item=0x7f080008;
         public static final int itemName_TextView=0x7f080005;
     }

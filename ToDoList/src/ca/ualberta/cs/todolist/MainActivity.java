@@ -1,23 +1,21 @@
 package ca.ualberta.cs.todolist;
 
 
+
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 public class MainActivity extends Activity {
@@ -28,7 +26,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
     	updateList();
-    	itemClicked();
+    	itemLongClicked();
     }
 
 
@@ -70,28 +68,43 @@ public class MainActivity extends Activity {
     	updateList();
     }
     
-    private void itemClicked() {
+    private void itemLongClicked() {
 
     	ListView list = (ListView) findViewById(R.id.ToDoList_ListView);
-		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View viewClicked,
-					int position, long id) {
-				// TODO Auto-generated method stub
-				CheckBox checkBox = (CheckBox) viewClicked.findViewById(R.id.checkBox);	
+			public  boolean onItemLongClick(AdapterView<?> parent, View viewClicked,
+					final int position, long id) {
 				
-		    	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
-				ToDoItem currentItem = toDoList.get(position);
-				currentItem.changeChecked(checkBox.isChecked()); 
-		    	Toast.makeText(MainActivity.this, "hello"+id, Toast.LENGTH_SHORT).show();  	
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				String[] optionsArray = {"Archive", "Delete"};
+				builder.setTitle("");
+				builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						if (which == 0) { // Archive
+							
+						}
+						else if (which == 1) { // Delete
+							
+							List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+							toDoList.remove(position);
+							updateList();
+						}
+					}
+				});
+				builder.create();
+				builder.show();
+				return false;
 			}
 			
 		});
 	}
     
     public void updateList() {
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, ToDoListController.getToDoList().getToDoList());
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, ToDoListController.getToDoList().getToDoList(), 0);
     	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
     	list.setAdapter(adapter);
     }

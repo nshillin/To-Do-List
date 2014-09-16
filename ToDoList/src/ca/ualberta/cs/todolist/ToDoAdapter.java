@@ -18,10 +18,12 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 	List<ToDoItem> list;
 	Context context;
 	int textViewResourceId;
+	int toDoListVersion; // 0 = ToDo, 1 = Archived, 2 = Both
 	
-	public ToDoAdapter(Context context, int textViewResourceId, List<ToDoItem> list) {
+	public ToDoAdapter(Context context, int textViewResourceId, List<ToDoItem> list, int toDoListVersion) {
 		super(context, textViewResourceId, list);
 		this.context = context;
+		this.toDoListVersion = toDoListVersion;
 	}
 
 	@Override
