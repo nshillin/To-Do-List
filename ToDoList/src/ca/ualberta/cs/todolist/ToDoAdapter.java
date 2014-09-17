@@ -22,12 +22,15 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 	
 	public ToDoAdapter(Context context, int textViewResourceId, List<ToDoItem> list, int toDoListVersion) {
 		super(context, textViewResourceId, list);
+		this.toDoList = list;
 		this.context = context;
 		this.toDoListVersion = toDoListVersion;
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
+		
+		
 		View itemView = convertView;
 		if (itemView == null) {
 			LayoutInflater inflater = LayoutInflater.from(context);
@@ -36,7 +39,7 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 		
 		ToDoItem currentItem = toDoList.get(position);
 		
-		TextView textView = (TextView) itemView.findViewById(R.id.itemName_TextView);
+		TextView textView = (TextView) itemView.findViewById(R.id.item_MediumTextView);
 		textView.setText(currentItem.getName());
 		
 		final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
@@ -52,7 +55,8 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 		});
 		checkBox.setChecked(currentItem.isChecked());
 		
-		return itemView; 
+		
+		return itemView;
 	}
 	
 	

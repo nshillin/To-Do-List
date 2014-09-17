@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class ArchivedItemsActivity extends Activity {
 
@@ -11,6 +13,8 @@ public class ArchivedItemsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_archived_items);
+		
+		updateList();
 	}
 
 	@Override
@@ -31,4 +35,12 @@ public class ArchivedItemsActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	public void updateList() {
+    	ToDoList toDoList = new ToDoList();
+		toDoList = ToDoListController.getArchivedToDoList();
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList.getToDoList(), 0);
+    	ListView list = (ListView) findViewById( R.id.ArchivedItemList_ListView);
+    	list.setAdapter(adapter);
+    }
 }

@@ -20,6 +20,8 @@ import android.content.Intent;
 
 public class MainActivity extends Activity {
 
+	private int toDoListDisplayVersion = 0; // 0 = ToDo, 1 = Archived, 2 = Both
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,10 @@ public class MainActivity extends Activity {
     	
     	Intent archivedItemsScreen = new Intent(MainActivity.this, ArchivedItemsActivity.class);
     	startActivity(archivedItemsScreen);
+    	
+    	
+    	toDoListDisplayVersion = 1;
+    	updateList();
     }
     
     public void addItem(View view) {
@@ -77,6 +83,8 @@ public class MainActivity extends Activity {
 			public  boolean onItemLongClick(AdapterView<?> parent, View viewClicked,
 					final int position, long id) {
 				
+				if (position != ToDoListController.getToDoList().getToDoList().size()-1) {
+					
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 				String[] optionsArray = {"Archive", "Delete"};
 				builder.setTitle("");
@@ -84,27 +92,47 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
+						List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+						List<ToDoItem> archivedToDoList = ToDoListController.getArchivedToDoList().getToDoList();
 						if (which == 0) { // Archive
-							
+							ToDoItem currentItem = toDoList.get(position);
+							archivedToDoList.add(currentItem);
+							toDoList.remove(currentItem);
+							ToDoItem finalItem = ToDoListController.getToDoList().getToDoList().get(ToDoListController.getToDoList().getToDoList().size()-1);
+							ToDoListController.getToDoList().removeItem(finalItem);
+							ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
+							ToDoListController.getToDoList().addItem(todocount);
 						}
 						else if (which == 1) { // Delete
-							
-							List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
 							toDoList.remove(position);
-							updateList();
+							ToDoItem currentItem = ToDoListController.getToDoList().getToDoList().get(ToDoListController.getToDoList().getToDoList().size()-1);
+							ToDoListController.getToDoList().removeItem(currentItem);
+							ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
+							ToDoListController.getToDoList().addItem(todocount);
 						}
+						updateList();
 					}
 				});
 				builder.create();
 				builder.show();
+				}
 				return false;
 			}
-			
 		});
 	}
     
     public void updateList() {
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, ToDoListController.getToDoList().getToDoList(), 0);
+    	ToDoList toDoList = new ToDoList();
+		toDoList = ToDoListController.getToDoList();
+/*
+    	if (toDoListDisplayVersion == 0) {
+    		toDoList = ToDoListController.getToDoList();
+    	}
+    	else if (toDoListDisplayVersion == 1) {
+    		toDoList = ToDoListController.getArchivedToDoList();
+    	} 
+    	*/
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList.getToDoList(), 0);
     	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
     	list.setAdapter(adapter);
     }
