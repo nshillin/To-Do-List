@@ -14,11 +14,9 @@ public class ToDoListController {
 		return todolist;
 	}
 	
-	public void addItem(ToDoItem todoitem) {
-		if (getToDoList().getToDoList().size() > 0) {
-			ToDoItem currentItem = getToDoList().getToDoList().get(getToDoList().getToDoList().size()-1);
-			getToDoList().removeItem(currentItem);
-		}
+	public static void addItem(ToDoItem todoitem) {
+		ToDoItem finalItem = getToDoList().getToDoList().get(getToDoList().getToDoList().size()-1);
+		getToDoList().removeItem(finalItem);
 		getToDoList().addItem(todoitem);
 		ToDoItem todocount = new ToDoItem("Number of items: " + getToDoList().getToDoList().size());
 		getToDoList().addItem(todocount);

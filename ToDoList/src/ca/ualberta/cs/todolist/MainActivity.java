@@ -4,6 +4,11 @@ package ca.ualberta.cs.todolist;
 
 import java.util.List;
 
+import ca.ualberta.cs.todolist.R;
+import ca.ualberta.cs.todolist.R.id;
+import ca.ualberta.cs.todolist.R.layout;
+import ca.ualberta.cs.todolist.R.menu;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -19,8 +24,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 public class MainActivity extends Activity {
-
-	private int toDoListDisplayVersion = 0; // 0 = ToDo, 1 = Archived, 2 = Both
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +62,6 @@ public class MainActivity extends Activity {
     	Intent archivedItemsScreen = new Intent(MainActivity.this, ArchivedItemsActivity.class);
     	startActivity(archivedItemsScreen);
     	
-    	
-    	toDoListDisplayVersion = 1;
-    	updateList();
     }
     
     public void addItem(View view) {
@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
 				if (position != ToDoListController.getToDoList().getToDoList().size()-1) {
 					
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-				String[] optionsArray = {"Archive", "Delete"};
+				String[] optionsArray = {"Archive", "Delete", "Email"};
 				builder.setTitle("");
 				builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
 					@Override
@@ -110,6 +110,13 @@ public class MainActivity extends Activity {
 							ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
 							ToDoListController.getToDoList().addItem(todocount);
 						}
+						else if (which == 2) { //Email one
+							Intent emailIntent = new Intent(Intent.ACTION_SEND);
+							emailIntent.putExtra(Intent.EXTRA_SUBJECT, "ToDo Item");
+							ToDoItem currentItem = toDoList.get(position);
+							emailIntent.putExtra(Intent.EXTRA_TEXT, currentItem.getName());
+							startActivity(Intent.createChooser(emailIntent, ""));
+						}
 						updateList();
 					}
 				});
@@ -124,15 +131,7 @@ public class MainActivity extends Activity {
     public void updateList() {
     	ToDoList toDoList = new ToDoList();
 		toDoList = ToDoListController.getToDoList();
-/*
-    	if (toDoListDisplayVersion == 0) {
-    		toDoList = ToDoListController.getToDoList();
-    	}
-    	else if (toDoListDisplayVersion == 1) {
-    		toDoList = ToDoListController.getArchivedToDoList();
-    	} 
-    	*/
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList.getToDoList(), 0);
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList.getToDoList());
     	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
     	list.setAdapter(adapter);
     }

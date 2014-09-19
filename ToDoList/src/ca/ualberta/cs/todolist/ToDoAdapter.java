@@ -2,6 +2,10 @@ package ca.ualberta.cs.todolist;
 
 import java.util.List;
 
+import ca.ualberta.cs.todolist.R;
+import ca.ualberta.cs.todolist.R.id;
+import ca.ualberta.cs.todolist.R.layout;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +22,11 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 	List<ToDoItem> list;
 	Context context;
 	int textViewResourceId;
-	int toDoListVersion; // 0 = ToDo, 1 = Archived, 2 = Both
 	
-	public ToDoAdapter(Context context, int textViewResourceId, List<ToDoItem> list, int toDoListVersion) {
+	public ToDoAdapter(Context context, int textViewResourceId, List<ToDoItem> list) {
 		super(context, textViewResourceId, list);
 		this.toDoList = list;
 		this.context = context;
-		this.toDoListVersion = toDoListVersion;
 	}
 
 	@Override
