@@ -1,4 +1,4 @@
-package ca.ualberta.cs.todolist;
+package ca.ualberta.cs.nshillin.todolist;
 
 
 
@@ -48,24 +48,16 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        if (id == R.id.archivedItems_Item) {
+        	Intent archivedItemsScreen = new Intent(MainActivity.this, ArchivedItemsActivity.class);
+        	startActivity(archivedItemsScreen);
+        } 
         return super.onOptionsItemSelected(item);
     }
     
     
-    
-    public void archivedItems(MenuItem menu) {
-    	Toast.makeText(this, "Archived Items", Toast.LENGTH_SHORT).show();
-    	
-    	Intent archivedItemsScreen = new Intent(MainActivity.this, ArchivedItemsActivity.class);
-    	startActivity(archivedItemsScreen);
-    	
-    }
-    
     public void addItem(View view) {
-    	Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();    	
+    //	Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();    	
     	ToDoListController todolistcontroller = new ToDoListController();
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
@@ -112,6 +104,7 @@ public class MainActivity extends Activity {
 						}
 						else if (which == 2) { //Email one
 							Intent emailIntent = new Intent(Intent.ACTION_SEND);
+							emailIntent.setType("memessage/rfc822");
 							emailIntent.putExtra(Intent.EXTRA_SUBJECT, "ToDo Item");
 							ToDoItem currentItem = toDoList.get(position);
 							emailIntent.putExtra(Intent.EXTRA_TEXT, currentItem.getName());

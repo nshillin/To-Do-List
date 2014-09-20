@@ -1,11 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ca.ualberta.cs.todolist.MainActivity" >
-    <item android:id="@+id/archivedItems_Item" android:title="Archived Items" android:onClick="archivedItems"></item>
-    <item android:id="@+id/email_Item" android:title="Email">
+    <item android:id="@+id/archivedItems_Item" android:title="Archived Items"></item>
+    <item android:id="@+id/email_Item" android:title="Email &gt;">
         <menu>
-            <item android:id="@+id/emailAll_item" android:title="EmailAll"/>
-            <item android:id="@+id/emailSelected_item" android:title="Email Selected"/>
+            <item android:id="@+id/emailAll_item" android:title="Email All"/>
+            <item android:id="@+id/emailTodo_item" android:title="Email To Do"/><item android:id="@+id/emailSelection_item" android:title="Email Selection"/>
+            
         </menu>
     </item>
 

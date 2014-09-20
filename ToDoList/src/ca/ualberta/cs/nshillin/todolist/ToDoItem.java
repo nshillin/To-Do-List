@@ -1,4 +1,4 @@
-package ca.ualberta.cs.todolist;
+package ca.ualberta.cs.nshillin.todolist;
 
 public class ToDoItem {
 	private String name;
