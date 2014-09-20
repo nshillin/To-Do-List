@@ -4,8 +4,9 @@
     <item android:id="@+id/archivedItems_Item" android:title="Archived Items" android:onClick="archivedItems"></item>
     <item android:id="@+id/email_Item" android:title="Email">
         <menu>
-            <item android:id="@+id/emailAll_item" android:title="EmailAll"/>
-            <item android:id="@+id/emailSelected_item" android:title="Email Selected"/>
+            <item android:id="@+id/emailAll_item" android:title="Email All"/>
+            <item android:id="@+id/emailAllToDo" android:title="Email All To Do"/><item android:id="@+id/emailSelection_item" android:title="Email Selection"/>
+            
         </menu>
     </item>
 
