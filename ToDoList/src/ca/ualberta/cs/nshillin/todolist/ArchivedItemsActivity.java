@@ -44,7 +44,7 @@ public class ArchivedItemsActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.todoList_item) {
-			return true;
+			this.finish();
 		} 
 		return super.onOptionsItemSelected(item);
 	}
