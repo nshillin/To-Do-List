@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ca.ualberta.cs.todolist.ArchivedItemsActivity" >
+<<<<<<< HEAD
     <item android:id="@+id/todoList_item" android:title="To Do List"></item><item android:id="@+id/email_item" android:title="Email &gt;">
         <menu>
             <item android:id="@+id/emailAll_item" android:title="Email All"/>
@@ -9,5 +10,15 @@
         </menu>
     </item>
     
+=======
+    <item android:id="@+id/todoList_item" android:title="To Do List"></item>
+    <item android:id="@+id/email_item" android:title="Email">
+        <menu>
+            <item android:id="@+id/emailAll_item" android:title="Email All"/>
+            <item android:id="@+id/emailAllArchived_item" android:title="Email All Archived" /><item android:id="@+id/emailSelection_item" android:title="Email Selection"/>
+            
+        </menu>
+    </item>
+>>>>>>> FETCH_HEAD
 
 </menu>

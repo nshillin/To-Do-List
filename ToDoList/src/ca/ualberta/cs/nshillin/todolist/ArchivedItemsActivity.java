@@ -3,12 +3,10 @@ package ca.ualberta.cs.nshillin.todolist;
 import java.util.List;
 
 import ca.ualberta.cs.todolist.R;
-import ca.ualberta.cs.todolist.R.id;
-import ca.ualberta.cs.todolist.R.layout;
-import ca.ualberta.cs.todolist.R.menu;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,8 +24,8 @@ public class ArchivedItemsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_archived_items);
 		
-		updateList();
-		itemLongClicked();
+//		updateList();
+//		itemLongClicked();
 	}
 
 	@Override
@@ -43,12 +41,18 @@ public class ArchivedItemsActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+<<<<<<< HEAD:ToDoList/src/ca/ualberta/cs/nshillin/todolist/ArchivedItemsActivity.java
 		if (id == R.id.todoList_item) {
 			return true;
 		} 
+=======
+	/*	if (id == R.id.action_settings) {
+			return true;
+		} */
+>>>>>>> FETCH_HEAD:ToDoList/src/ca/ualberta/cs/nshillin/todolist/ArchivedItemsActivity.java
 		return super.onOptionsItemSelected(item);
 	}
-	
+	/*
 	private void itemLongClicked() {
 
     	ListView list = (ListView) findViewById(R.id.ArchivedItemList_ListView);
@@ -59,14 +63,14 @@ public class ArchivedItemsActivity extends Activity {
 					final int position, long id) {
 									
 				AlertDialog.Builder builder = new AlertDialog.Builder(ArchivedItemsActivity.this);
-				String[] optionsArray = {"Unarchive", "Delete", "Email"};
+				String[] optionsArray = {"UnArchive", "Delete", "Email"};
 				builder.setTitle("");
 				builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						List<ToDoItem> archivedToDoList = ToDoListController.getArchivedToDoList().getToDoList();
-						if (which == 0) { // Unarchive
+						if (which == 0) { // UnArchive
 							ToDoItem currentItem = archivedToDoList.get(position);
 							ToDoListController.addItem(currentItem);
 							archivedToDoList.remove(currentItem);
@@ -83,19 +87,21 @@ public class ArchivedItemsActivity extends Activity {
 						}
 						updateList();
 					}
-				});
+				}); 
 				builder.create();
-				builder.show();
-				return false;
+				builder.show(); 
+	//			return false; 
+					}
+				});
 			}
 		});
-	}
-	
+	} */
+	/*
 	public void updateList() {
     	ToDoList toDoList = new ToDoList();
-		toDoList = ToDoListController.getArchivedToDoList();
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList.getToDoList());
+	//	toDoList = ToDoListController.getArchivedToDoList();
+    //	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList.getToDoList());
     	ListView list = (ListView) findViewById( R.id.ArchivedItemList_ListView);
-    	list.setAdapter(adapter);
-    }
+  //  	list.setAdapter(adapter);
+    } */
 }

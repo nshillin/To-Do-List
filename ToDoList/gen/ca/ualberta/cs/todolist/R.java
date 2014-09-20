@@ -31,10 +31,17 @@ public final class R {
         public static final int addItem_TextView=0x7f080003;
         public static final int archivedItems_Item=0x7f08000c;
         public static final int checkBox=0x7f080005;
+<<<<<<< HEAD
         public static final int emailAll_item=0x7f080009;
         public static final int emailArchived_item=0x7f08000a;
         public static final int emailSelection_item=0x7f08000b;
         public static final int emailTodo_item=0x7f08000e;
+=======
+        public static final int emailAllArchived_item=0x7f08000a;
+        public static final int emailAllToDo=0x7f08000e;
+        public static final int emailAll_item=0x7f080009;
+        public static final int emailSelection_item=0x7f08000b;
+>>>>>>> FETCH_HEAD
         public static final int email_Item=0x7f08000d;
         public static final int email_item=0x7f080008;
         public static final int item_MediumTextView=0x7f080006;
