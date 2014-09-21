@@ -3,7 +3,7 @@ package ca.ualberta.cs.nshillin.todolist;
 public class ToDoListController {
 
 	private static ToDoList todolist = null;
-	private static ToDoList archivedtodolist = null;
+//	private static ToDoList archivedtodolist = null;
 	
 	static public ToDoList getToDoList() {
 		if (todolist == null) {
@@ -21,7 +21,7 @@ public class ToDoListController {
 		ToDoItem todocount = new ToDoItem("Number of items: " + getToDoList().getToDoList().size());
 		getToDoList().addItem(todocount);
 	}
-	
+	/*
 	static public ToDoList getArchivedToDoList() {
 		if (archivedtodolist == null) {
 			archivedtodolist = new ToDoList();
@@ -32,4 +32,5 @@ public class ToDoListController {
 	public void addItemToArchive(ToDoItem todoitem) {
 		getArchivedToDoList().addItem(todoitem);
 	}
+	*/
 }

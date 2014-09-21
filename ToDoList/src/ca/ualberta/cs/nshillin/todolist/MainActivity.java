@@ -25,6 +25,8 @@ import android.content.Intent;
 
 public class MainActivity extends Activity {
 	
+	public String[] optionsArray = {"Archive", "Delete", "Email"};
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +60,10 @@ public class MainActivity extends Activity {
     
     public void addItem(View view) {
     //	Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();    	
-    	ToDoListController todolistcontroller = new ToDoListController();
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
     	textView.setText("");
-    	todolistcontroller.addItem(todoitem);
+    	ToDoListController.addItem(todoitem);
     	updateList();
     }
     
@@ -78,37 +79,19 @@ public class MainActivity extends Activity {
 				if (position != ToDoListController.getToDoList().getToDoList().size()-1) {
 					
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-				String[] optionsArray = {"Archive", "Delete", "Email"};
 				builder.setTitle("");
 				builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
-						List<ToDoItem> archivedToDoList = ToDoListController.getArchivedToDoList().getToDoList();
 						if (which == 0) { // Archive
-							ToDoItem currentItem = toDoList.get(position);
-							archivedToDoList.add(currentItem);
-							toDoList.remove(currentItem);
-							ToDoItem finalItem = ToDoListController.getToDoList().getToDoList().get(ToDoListController.getToDoList().getToDoList().size()-1);
-							ToDoListController.getToDoList().removeItem(finalItem);
-							ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
-							ToDoListController.getToDoList().addItem(todocount);
+							archive();
 						}
 						else if (which == 1) { // Delete
-							toDoList.remove(position);
-							ToDoItem currentItem = ToDoListController.getToDoList().getToDoList().get(ToDoListController.getToDoList().getToDoList().size()-1);
-							ToDoListController.getToDoList().removeItem(currentItem);
-							ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
-							ToDoListController.getToDoList().addItem(todocount);
+							delete();
 						}
 						else if (which == 2) { //Email one
-							Intent emailIntent = new Intent(Intent.ACTION_SEND);
-							emailIntent.setType("memessage/rfc822");
-							emailIntent.putExtra(Intent.EXTRA_SUBJECT, "ToDo Item");
-							ToDoItem currentItem = toDoList.get(position);
-							emailIntent.putExtra(Intent.EXTRA_TEXT, currentItem.getName());
-							startActivity(Intent.createChooser(emailIntent, ""));
+							emailOne();
 						}
 						updateList();
 					}
@@ -120,6 +103,41 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+    
+    public static void archive() {
+    	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+		List<ToDoItem> archivedToDoList = ArchivedListController.getToDoList().getToDoList();
+		
+    	ToDoItem currentItem = toDoList.get(1);
+		archivedToDoList.add(currentItem);
+		toDoList.remove(currentItem);
+		ToDoItem finalItem = ToDoListController.getToDoList().getToDoList().get(ToDoListController.getToDoList().getToDoList().size()-1);
+		ToDoListController.getToDoList().removeItem(finalItem);
+		ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
+		ToDoListController.getToDoList().addItem(todocount);
+    }
+    
+    public static void delete() {
+    	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+    	
+		toDoList.remove(1);
+		ToDoItem currentItem = ToDoListController.getToDoList().getToDoList().get(ToDoListController.getToDoList().getToDoList().size()-1);
+		ToDoListController.getToDoList().removeItem(currentItem);
+		ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
+		ToDoListController.getToDoList().addItem(todocount);
+    }
+    
+    public static void emailOne() {
+    	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+    	
+    	Intent emailIntent = new Intent(Intent.ACTION_SEND);
+		emailIntent.setType("memessage/rfc822");
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "ToDo Item");
+		ToDoItem currentItem = toDoList.get(1);
+		emailIntent.putExtra(Intent.EXTRA_TEXT, currentItem.getName());
+	//	startActivity(Intent.createChooser(emailIntent, ""));
+    }
+    
     
     public void updateList() {
     	ToDoList toDoList = new ToDoList();
