@@ -2,7 +2,7 @@ package ca.ualberta.cs.nshillin.todolist;
 
 import java.util.List;
 
-public class ArchivedListController extends ToDoListController {
+public class ArchivedListController  {
 	
 	private static ToDoList archivedtodolist = null;
 	
@@ -15,10 +15,6 @@ public class ArchivedListController extends ToDoListController {
 	
 	public static void addItem(ToDoItem todoitem) {
 		archivedtodolist.addItem(todoitem);
-	}
-	
-	public static void removeItem(ToDoItem todoitem) {
-		
 	}
 
 }

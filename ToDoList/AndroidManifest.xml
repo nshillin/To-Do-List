@@ -24,6 +24,7 @@
         </activity>
         <activity
             android:name="ca.ualberta.cs.nshillin.todolist.ArchivedItemsActivity"
+           	android:screenOrientation="portrait"
             android:label="@string/title_activity_archived_items" >
         </activity>
     </application>

@@ -6,7 +6,7 @@ public class ToDoListController {
 
 	private static ToDoList todolist = null;
 	
-	static public List<ToDoItem> getToDoList() {
+	public static List<ToDoItem> getToDoList() {
 		if (todolist == null) {
 			todolist = new ToDoList();
 		}
@@ -15,9 +15,5 @@ public class ToDoListController {
 	
 	public static void addItem(ToDoItem todoitem) {
 		todolist.addItem(todoitem);
-	}
-	
-	public static void removeItem(ToDoItem todoitem) {
-		
 	}
 }

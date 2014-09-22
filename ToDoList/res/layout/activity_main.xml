@@ -34,6 +34,11 @@
         android:layout_alignBottom="@+id/addItem_Button"
         android:layout_alignLeft="@+id/ToDoList_ListView"
         android:layout_toLeftOf="@+id/addItem_Button"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:lines="1"
+        android:inputType=""
+        android:imeOptions="flagNoExtractUi"
         android:ems="10" />
 
     <ListView

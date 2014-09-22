@@ -21,6 +21,9 @@
         android:layout_alignBaseline="@+id/checkBox"
         android:layout_alignBottom="@+id/checkBox"
         android:layout_toRightOf="@+id/checkBox"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:lines="1"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

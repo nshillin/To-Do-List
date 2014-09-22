@@ -43,6 +43,7 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 		textView.setText(currentItem.getName());
 		
 		final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+		final Context context = this.context;
 		checkBox.setOnClickListener(new OnClickListener() {
 			
 			@Override
