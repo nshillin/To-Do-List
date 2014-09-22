@@ -17,6 +17,10 @@ public class ArchivedItemsActivity extends MainActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_archived_items);
 		
+		if (listController.getToDoList().size() == 0) {
+        	retrieveInformation();
+        }
+		
 		optionsArray[0] = "UnArchive";
 		listViewId  = R.id.ArchivedItemList_ListView;
         itemCountViewId = R.id.itemCount_textView;
@@ -39,6 +43,7 @@ public class ArchivedItemsActivity extends MainActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.todoList_item) {
+			this.setResult(RESULT_OK);
 			this.finish();
 		} 
 		return super.onOptionsItemSelected(item);

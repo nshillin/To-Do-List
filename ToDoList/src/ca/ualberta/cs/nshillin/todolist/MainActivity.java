@@ -11,6 +11,7 @@ import ca.ualberta.cs.todolist.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+       
         if (listController.getToDoList().size() == 0) {
         	retrieveInformation();
         }
@@ -49,7 +51,7 @@ public class MainActivity extends Activity {
     	itemLongClicked();
     }
 
-
+    
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -66,13 +68,26 @@ public class MainActivity extends Activity {
         if (id == R.id.archivedItems_Item) {
         	Intent archivedItemsScreen = new Intent(MainActivity.this, ArchivedItemsActivity.class);
         	startActivity(archivedItemsScreen);
+        	
+        	
         } 
         return super.onOptionsItemSelected(item);
     }
 
     
     
-    public void addItem(View view) {
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+    	updateList();
+	}
+	
+	
+
+
+	public void addItem(View view) {
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
     	textView.setText("");
@@ -105,7 +120,7 @@ public class MainActivity extends Activity {
 		SharedPreferences settings = this.getSharedPreferences("ToDoItems", 0);
     	Set<String> itemNames = settings.getStringSet("itemNames", new HashSet<String>());
     	String[] itemNamesArray = itemNames.toArray(new String[itemNames.size()]);
-    	for (int x=0; x<itemNames.size(); x++) {
+    	for (int x=itemNames.size()-1; x>-1; x--) {
         	ToDoItem todoitem = new ToDoItem(itemNamesArray[x].toString());
         	listController.getToDoList().add(todoitem);
     	} 

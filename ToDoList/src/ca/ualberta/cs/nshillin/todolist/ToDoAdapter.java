@@ -48,7 +48,6 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 			
 			@Override
 			public void onClick(View v) {
-				
 				List<ToDoItem> toDoList = ToDoListController.getToDoList();
 				ToDoItem currentItem = toDoList.get(position);
 				currentItem.changeChecked(checkBox.isChecked()); 
