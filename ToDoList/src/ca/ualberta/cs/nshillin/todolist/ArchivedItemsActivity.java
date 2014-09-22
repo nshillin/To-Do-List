@@ -65,7 +65,7 @@ public class ArchivedItemsActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						List<ToDoItem> archivedToDoList = ToDoListController.getToDoList().getToDoList();
+						List<ToDoItem> archivedToDoList = ToDoListController.getToDoList();
 						if (which == 0) { // Unarchive
 							ToDoItem currentItem = archivedToDoList.get(position);
 							ToDoListController.addItem(currentItem);
@@ -92,9 +92,9 @@ public class ArchivedItemsActivity extends Activity {
 	}
 	
 	public void updateList() {
-    	ToDoList toDoList = new ToDoList();
+		List<ToDoItem> toDoList;
 		toDoList = ToDoListController.getToDoList();
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList.getToDoList());
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList);
     	ListView list = (ListView) findViewById( R.id.ArchivedItemList_ListView);
     	list.setAdapter(adapter);
     }

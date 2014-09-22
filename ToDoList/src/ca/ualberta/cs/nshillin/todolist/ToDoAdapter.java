@@ -3,8 +3,6 @@ package ca.ualberta.cs.nshillin.todolist;
 import java.util.List;
 
 import ca.ualberta.cs.todolist.R;
-import ca.ualberta.cs.todolist.R.id;
-import ca.ualberta.cs.todolist.R.layout;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,9 +16,8 @@ import android.widget.TextView;
 
 class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 	
-	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+	List<ToDoItem> toDoList = ToDoListController.getToDoList();
 	
-	List<ToDoItem> list;
 	Context context;
 	int textViewResourceId;
 	
@@ -51,17 +48,17 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 			@Override
 			public void onClick(View v) {
 				
-				List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+				List<ToDoItem> toDoList = ToDoListController.getToDoList();
 				ToDoItem currentItem = toDoList.get(position);
 				currentItem.changeChecked(checkBox.isChecked()); 
 			}
 		});
 		checkBox.setChecked(currentItem.isChecked());
-		
-		if (position == ToDoListController.getToDoList().getToDoList().size() -1) {
+	/*	
+		if (position == ToDoListController.getToDoList().size() -1) {
 			checkBox.setVisibility(View.INVISIBLE);
 		}
-		
+		*/
 	//	itemView.setBackgroundColor(Color.CYAN);
 		
 		return itemView;

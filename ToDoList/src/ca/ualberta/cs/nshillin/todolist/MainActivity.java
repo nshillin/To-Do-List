@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,6 +27,8 @@ import android.content.Intent;
 public class MainActivity extends Activity {
 	
 	public String[] optionsArray = {"Archive", "Delete", "Email"};
+	public ToDoListController listController;
+	public ArchivedListController oppositeListController; //in this case archived
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +62,10 @@ public class MainActivity extends Activity {
     
     
     public void addItem(View view) {
-    //	Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show();    	
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
     	textView.setText("");
-    	ToDoListController.addItem(todoitem);
+    	listController.addItem(todoitem);
     	updateList();
     }
     
@@ -75,9 +77,7 @@ public class MainActivity extends Activity {
 			@Override
 			public  boolean onItemLongClick(AdapterView<?> parent, View viewClicked,
 					final int position, long id) {
-				
-				if (position != ToDoListController.getToDoList().getToDoList().size()-1) {
-					
+									
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 				builder.setTitle("");
 				builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
@@ -85,64 +85,70 @@ public class MainActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						if (which == 0) { // Archive
-							archive();
+							archive(position);
 						}
 						else if (which == 1) { // Delete
-							delete();
+							delete(position);
 						}
 						else if (which == 2) { //Email one
-							emailOne();
+							emailOne(position);
 						}
 						updateList();
 					}
 				});
 				builder.create();
 				builder.show();
-				}
 				return false;
 			}
 		});
 	}
     
-    public static void archive() {
-    	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
-		List<ToDoItem> archivedToDoList = ArchivedListController.getToDoList().getToDoList();
+    public void archive(int position) {
+    	List<ToDoItem> toDoList = listController.getToDoList();
+		List<ToDoItem> archivedToDoList = ArchivedListController.getToDoList();
 		
-    	ToDoItem currentItem = toDoList.get(1);
+    	ToDoItem currentItem = toDoList.get(position);
 		archivedToDoList.add(currentItem);
 		toDoList.remove(currentItem);
-		ToDoItem finalItem = ToDoListController.getToDoList().getToDoList().get(ToDoListController.getToDoList().getToDoList().size()-1);
-		ToDoListController.getToDoList().removeItem(finalItem);
-		ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
-		ToDoListController.getToDoList().addItem(todocount);
     }
     
-    public static void delete() {
-    	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+    public void delete(int position) {
+    	List<ToDoItem> toDoList = listController.getToDoList();
     	
-		toDoList.remove(1);
-		ToDoItem currentItem = ToDoListController.getToDoList().getToDoList().get(ToDoListController.getToDoList().getToDoList().size()-1);
-		ToDoListController.getToDoList().removeItem(currentItem);
-		ToDoItem todocount = new ToDoItem("Number of items: " + ToDoListController.getToDoList().getToDoList().size());
-		ToDoListController.getToDoList().addItem(todocount);
+		toDoList.remove(position);
+		ToDoItem currentItem = listController.getToDoList().get(listController.getToDoList().size()-1);
+		listController.removeItem(currentItem);
+		
     }
     
-    public static void emailOne() {
-    	List<ToDoItem> toDoList = ToDoListController.getToDoList().getToDoList();
+    public void emailOne(int position) {
+    	List<ToDoItem> toDoList = listController.getToDoList();
     	
     	Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("memessage/rfc822");
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "ToDo Item");
-		ToDoItem currentItem = toDoList.get(1);
+		ToDoItem currentItem = toDoList.get(position);
 		emailIntent.putExtra(Intent.EXTRA_TEXT, currentItem.getName());
-	//	startActivity(Intent.createChooser(emailIntent, ""));
+//		startActivity(Intent.createChooser(emailIntent, ""));
+    }
+    
+    public void updateCount() {
+    	TextView itemCount = (TextView) findViewById( R.id.itemCount_TextView);
+    	int checked = 0;
+    	for (int x=0; x < listController.getToDoList().size(); x++) {
+    		if (listController.getToDoList().get(x).isChecked()) {
+    			checked++;
+    		}
+    	}
+    	itemCount.setText("Items: "+ listController.getToDoList().size() + "     Checked: " + checked + "     Unchecked: " + (listController.getToDoList().size() - checked));
     }
     
     
     public void updateList() {
-    	ToDoList toDoList = new ToDoList();
-		toDoList = ToDoListController.getToDoList();
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList.getToDoList());
+    	updateCount();
+    	List<ToDoItem> toDoList;
+		toDoList = listController.getToDoList();
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList);
     	ListView list = (ListView) findViewById( R.id.ToDoList_ListView);
     	list.setAdapter(adapter);
     }
