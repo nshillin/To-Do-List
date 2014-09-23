@@ -16,15 +16,17 @@ import android.widget.TextView;
 
 class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 	
-	List<ToDoItem> toDoList = ToDoListController.getToDoList();
+	List<ToDoItem> toDoList;
+	int listNumber;
 	
 	Context context;
 	int textViewResourceId;
 	
-	public ToDoAdapter(Context context, int textViewResourceId, List<ToDoItem> list) {
+	public ToDoAdapter(Context context, int textViewResourceId, List<ToDoItem> list, int listNumber) {
 		super(context, textViewResourceId, list);
-		this.toDoList = list;
+		this.toDoList = ToDoListController.getToDoList(listNumber);
 		this.context = context;
+		this.listNumber = listNumber;
 	}
 
 	@Override
@@ -43,14 +45,15 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 		textView.setText(currentItem.getName());
 		
 		final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
-		final Context context = this.context;
+	//	final Context context = this.context;
 		checkBox.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				List<ToDoItem> toDoList = ToDoListController.getToDoList();
+				List<ToDoItem> toDoList = ToDoListController.getToDoList(listNumber);
 				ToDoItem currentItem = toDoList.get(position);
 				currentItem.changeChecked(checkBox.isChecked()); 
+				
 			}
 		});
 		checkBox.setChecked(currentItem.isChecked());

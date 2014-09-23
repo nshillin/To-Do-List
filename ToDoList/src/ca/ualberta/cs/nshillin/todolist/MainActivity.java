@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,10 +29,11 @@ import android.content.SharedPreferences;
 public class MainActivity extends Activity {
 	
 	public String[] optionsArray = {"Archive", "Delete", "Email"};
-	public ToDoListController listController;
-	public ArchivedListController oppositeListController; //in this case archived
+	public int mainListNumber;
+	public int oppositeListNumber;	
 	public int listViewId;
 	public int itemCountViewId;
+	public ToDoListController listController;
 	
 	
 	
@@ -40,8 +42,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-       
-        if (listController.getToDoList().size() == 0) {
+        mainListNumber = 1;
+        oppositeListNumber = 2;
+        if (listController.getToDoList(mainListNumber).size() == 0) {
         	retrieveInformation();
         }
         
@@ -85,13 +88,12 @@ public class MainActivity extends Activity {
 	}
 	
 	
-
-
+	
 	public void addItem(View view) {
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
     	textView.setText("");
-    	listController.addItem(todoitem);
+    	listController.addItem(todoitem, mainListNumber);
     	storeInformation();
     	updateList();
     }
@@ -100,7 +102,7 @@ public class MainActivity extends Activity {
 		SharedPreferences settings = this.getSharedPreferences("ToDoItems", 0);
     	SharedPreferences.Editor editor = settings.edit();
     	Set<String> itemNames = new HashSet<String>(settings.getStringSet("itemNames", new HashSet<String>()));
-    	ToDoItem todoitem = listController.getToDoList().get(listController.getToDoList().size()-1);
+    	ToDoItem todoitem = listController.getToDoList(mainListNumber).get(listController.getToDoList(mainListNumber).size()-1);
     	itemNames.add(todoitem.getName());
     	editor.putStringSet("itemNames", itemNames);
     	editor.commit();
@@ -110,7 +112,7 @@ public class MainActivity extends Activity {
 		SharedPreferences settings = this.getSharedPreferences("ToDoItems", 0);
     	SharedPreferences.Editor editor = settings.edit();
     	Set<String> itemNames = new HashSet<String>(settings.getStringSet("itemNames", new HashSet<String>()));
-    	ToDoItem todoitem = listController.getToDoList().get(position);
+    	ToDoItem todoitem = listController.getToDoList(mainListNumber).get(position);
     	itemNames.remove(todoitem.getName());
     	editor.putStringSet("itemNames", itemNames);
     	editor.commit();
@@ -122,7 +124,7 @@ public class MainActivity extends Activity {
     	String[] itemNamesArray = itemNames.toArray(new String[itemNames.size()]);
     	for (int x=itemNames.size()-1; x>-1; x--) {
         	ToDoItem todoitem = new ToDoItem(itemNamesArray[x].toString());
-        	listController.getToDoList().add(todoitem);
+        	listController.addItem(todoitem, mainListNumber);
     	} 
 	}
     
@@ -161,8 +163,8 @@ public class MainActivity extends Activity {
 	}
     
     public void archive(int position) {
-    	List<ToDoItem> toDoList = listController.getToDoList();
-		List<ToDoItem> archivedToDoList = oppositeListController.getToDoList();
+    	List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
+		List<ToDoItem> archivedToDoList = listController.getToDoList(oppositeListNumber);
 		
     	ToDoItem currentItem = toDoList.get(position);
 		archivedToDoList.add(currentItem);
@@ -171,7 +173,7 @@ public class MainActivity extends Activity {
     }
     
 	public void delete(int position) {
-    	List<ToDoItem> toDoList = listController.getToDoList();
+    	List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
     	
 		removeInformation(position);
 		toDoList.remove(position);
@@ -179,7 +181,7 @@ public class MainActivity extends Activity {
     }
     
     public void emailOne(int position) {
-		List<ToDoItem> toDoList = listController.getToDoList();
+		List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
     	
     	Intent emailIntent = new Intent(Intent.ACTION_SEND);
 		emailIntent.setType("memessage/rfc822");
@@ -192,20 +194,20 @@ public class MainActivity extends Activity {
     public void updateCount() {
     	TextView itemCount = (TextView) findViewById( itemCountViewId);
     	int checked = 0;
-    	for (int x=0; x < listController.getToDoList().size(); x++) {
-    		if (listController.getToDoList().get(x).isChecked()) {
+    	for (int x=0; x < listController.getToDoList(mainListNumber).size(); x++) {
+    		if (listController.getToDoList(mainListNumber).get(x).isChecked()) {
     			checked++;
     		}
     	}
-    	itemCount.setText("Items: "+ listController.getToDoList().size() + "     Checked: " + checked + "     Unchecked: " + (listController.getToDoList().size() - checked));
+    	itemCount.setText("Items: "+ listController.getToDoList(mainListNumber).size() + "     Checked: " + checked + "     Unchecked: " + (listController.getToDoList(mainListNumber).size() - checked));
     }
     
     
     public void updateList() {
     	updateCount();
     	List<ToDoItem> toDoList;
-		toDoList = listController.getToDoList();
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item, toDoList);
+		toDoList = listController.getToDoList(mainListNumber);
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item,toDoList, mainListNumber);
     	ListView list = (ListView) findViewById( listViewId);
     	list.setAdapter(adapter);
     }

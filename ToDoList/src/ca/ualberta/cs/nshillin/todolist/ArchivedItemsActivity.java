@@ -17,8 +17,10 @@ public class ArchivedItemsActivity extends MainActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_archived_items);
 		
-		if (listController.getToDoList().size() == 0) {
-        	retrieveInformation();
+		mainListNumber = 2;
+        oppositeListNumber = 1;
+		if (listController.getToDoList(2).size() == 0) {
+ //       	retrieveInformation();
         }
 		
 		optionsArray[0] = "UnArchive";
