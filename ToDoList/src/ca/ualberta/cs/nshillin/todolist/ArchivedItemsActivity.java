@@ -19,8 +19,10 @@ public class ArchivedItemsActivity extends MainActivity {
 		
 		mainListNumber = 2;
         oppositeListNumber = 1;
-		if (listController.getToDoList(2).size() == 0) {
- //       	retrieveInformation();
+        spName = "ArchivedToDoItems";
+        oppositespName = "ToDoItems";
+		if (listController.getToDoList(mainListNumber).size() == 0) {
+        	retrieveInformation();
         }
 		
 		optionsArray[0] = "UnArchive";
