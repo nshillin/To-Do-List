@@ -26,26 +26,29 @@ public final class R {
     }
     public static final class id {
         public static final int ArchivedItemList_ListView=0x7f080000;
-        public static final int ToDoList_ListView=0x7f080004;
-        public static final int action_settings=0x7f080010;
-        public static final int addItem_Button=0x7f080003;
-        public static final int addItem_TextView=0x7f080005;
-        public static final int archivedItems_Item=0x7f080011;
-        public static final int checkBox=0x7f080008;
-        public static final int emailAll_item=0x7f08000c;
-        public static final int emailArchived_item=0x7f08000d;
-        public static final int emailSelectionArchived_item=0x7f08000e;
-        public static final int emailSelection_item=0x7f080014;
-        public static final int emailTodo_item=0x7f080013;
-        public static final int email_Item=0x7f080012;
-        public static final int email_item=0x7f08000b;
-        public static final int help_item=0x7f08000f;
-        public static final int help_textView=0x7f080007;
-        public static final int itemCount_TextView=0x7f080006;
+        public static final int ToDoList_ListView=0x7f080008;
+        public static final int addItem_Button=0x7f080007;
+        public static final int addItem_TextView=0x7f080009;
+        public static final int archivedItems_Item=0x7f080014;
+        public static final int checkBox=0x7f08000c;
+        public static final int emailAll_item=0x7f080010;
+        public static final int emailArchived_item=0x7f080011;
+        public static final int emailSelectionArchived_item=0x7f080012;
+        public static final int emailSelection_item=0x7f080017;
+        public static final int emailTodo_item=0x7f080016;
+        public static final int email_Button=0x7f080006;
+        public static final int email_Item=0x7f080015;
+        public static final int email_item=0x7f08000f;
+        public static final int emailcount_textView=0x7f080004;
+        public static final int emailselection_textView=0x7f080003;
+        public static final int help_item=0x7f080013;
+        public static final int help_textView=0x7f08000b;
+        public static final int itemCount_TextView=0x7f08000a;
         public static final int itemCount_textView=0x7f080001;
-        public static final int item_MediumTextView=0x7f080009;
+        public static final int item_MediumTextView=0x7f08000d;
+        public static final int listView1=0x7f080005;
         public static final int title_textView=0x7f080002;
-        public static final int todoList_item=0x7f08000a;
+        public static final int todoList_item=0x7f08000e;
     }
     public static final class layout {
         public static final int activity_archived_items=0x7f030000;
@@ -56,8 +59,7 @@ public final class R {
     }
     public static final class menu {
         public static final int archived_items=0x7f070000;
-        public static final int email_selection=0x7f070001;
-        public static final int main=0x7f070002;
+        public static final int main=0x7f070001;
     }
     public static final class string {
         public static final int action_settings=0x7f050004;
