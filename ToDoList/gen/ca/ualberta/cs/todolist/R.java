@@ -46,7 +46,7 @@ public final class R {
         public static final int itemCount_TextView=0x7f08000a;
         public static final int itemCount_textView=0x7f080001;
         public static final int item_MediumTextView=0x7f08000d;
-        public static final int listView1=0x7f080005;
+        public static final int selection_listView=0x7f080005;
         public static final int title_textView=0x7f080002;
         public static final int todoList_item=0x7f08000e;
     }

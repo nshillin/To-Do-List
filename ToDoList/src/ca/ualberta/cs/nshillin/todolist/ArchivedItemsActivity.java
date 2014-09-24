@@ -11,7 +11,6 @@ import android.view.MenuItem;
 public class ArchivedItemsActivity extends MainActivity {
 
 	
-	@SuppressWarnings("static-access")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -22,9 +21,6 @@ public class ArchivedItemsActivity extends MainActivity {
         oppositeListNumber = 1;
         spName = "ArchivedToDoItems";
         oppositespName = "ToDoItems";
-		if (listController.getToDoList(mainListNumber).size() == 0) {
-        	retrieveInformation();
-        }
 		
 		optionsArray[0] = "UnArchive";
 		listViewId  = R.id.ArchivedItemList_ListView;
@@ -51,10 +47,11 @@ public class ArchivedItemsActivity extends MainActivity {
 			this.setResult(RESULT_OK);
 			this.finish();
 		} 
-	/*	if (id == R.id.help_item) {
-        	Intent settingsScreen = new Intent(ArchivedItemsActivity.this, SettingsActivity.class);
-        	startActivity(settingsScreen);
-        } */
+		
+		if (id == R.id.emailArchived_item) {
+        	emailAll(mainListNumber);
+        }
+		
 		return super.onOptionsItemSelected(item);
 	}
 	

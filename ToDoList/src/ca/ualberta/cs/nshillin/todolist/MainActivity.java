@@ -48,7 +48,10 @@ public class MainActivity extends Activity {
         spName = "ToDoItems";
         oppositespName = "ArchivedToDoItems";
         if (listController.getToDoList(mainListNumber).size() == 0) {
-        	retrieveInformation();
+        	retrieveInformation(spName, mainListNumber);
+        }
+        if (listController.getToDoList(oppositeListNumber).size() == 0) {
+        	retrieveInformation(oppositespName, oppositeListNumber);
         }
         
         listViewId  = R.id.ToDoList_ListView;
@@ -78,7 +81,17 @@ public class MainActivity extends Activity {
         if (id == R.id.help_item) {
         	Intent settingsScreen = new Intent(MainActivity.this, SettingsActivity.class);
         	startActivity(settingsScreen);
-        } 
+        }
+        if (id == R.id.emailAll_item) {
+        	emailAll(3);
+        }
+        if (id == R.id.emailTodo_item) {
+        	emailAll(mainListNumber);
+        }
+        if (id == R.id.emailSelection_item) {
+        	Intent emailSelectionScreen = new Intent(MainActivity.this, EmailSelectionActivity.class);
+        	startActivity(emailSelectionScreen);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -89,17 +102,6 @@ public class MainActivity extends Activity {
     	updateList();
 	}
 	
-	
-	
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub
-		return super.onTouchEvent(event);
-	}
-	
-	
-
-
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
 		// TODO Auto-generated method stub
@@ -141,15 +143,37 @@ public class MainActivity extends Activity {
 
 		List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
     	
-    	Intent emailIntent = new Intent(Intent.ACTION_SEND);
-		emailIntent.setType("memessage/rfc822");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "To Do Item");
+    	Intent email = new Intent(Intent.ACTION_SEND);
+		email.setType("memessage/rfc822");
+		email.putExtra(Intent.EXTRA_SUBJECT, "To Do Item");
 		ToDoItem currentItem = toDoList.get(position);
-		emailIntent.putExtra(Intent.EXTRA_TEXT, currentItem.getName());
-		startActivity(Intent.createChooser(emailIntent, ""));
+		email.putExtra(Intent.EXTRA_TEXT, currentItem.getName());
+		startActivity(Intent.createChooser(email, ""));
     }
     
-    
+    public void emailAll(int listNumber) {
+    	Intent email = new Intent(Intent.ACTION_SEND);
+		email.setType("memessage/rfc822");
+		email.putExtra(Intent.EXTRA_SUBJECT, "My To Do List");
+		String stringListOfItems = "";
+    	if ((listNumber == 1) || (listNumber == 3)) {
+    		stringListOfItems += "To Do List:";
+    		for (int x = 0; x < listController.getToDoList(1).size(); x++) {
+    			stringListOfItems += ("\n" + listController.getToDoList(1).get(x).getName());
+    		}
+    	}
+    	if ((listNumber == 2) || (listNumber == 3)) {
+    		if (listNumber == 3) {
+    			stringListOfItems += "\n\n";
+    		}
+    		stringListOfItems += "Archived To Do List:";
+    		for (int x = 0; x < listController.getToDoList(2).size(); x++) {
+    			stringListOfItems += ("\n" + listController.getToDoList(2).get(x).getName());
+    		}
+    	}
+		email.putExtra(Intent.EXTRA_TEXT, stringListOfItems);
+		startActivity(Intent.createChooser(email, ""));
+    }
     
     public void storeInformation(int listNumber, String spName) {
 		SharedPreferences settings = this.getSharedPreferences(spName, 0);
@@ -171,14 +195,14 @@ public class MainActivity extends Activity {
     	editor.commit();
     }
 	
-	public void retrieveInformation() {
+	public void retrieveInformation(String name, int listNumber) {
 
-		SharedPreferences settings = this.getSharedPreferences(spName, 0);
+		SharedPreferences settings = this.getSharedPreferences(name, 0);
     	Set<String> itemNames = settings.getStringSet("itemNames", new HashSet<String>());
     	String[] itemNamesArray = itemNames.toArray(new String[itemNames.size()]);
     	for (int x=itemNames.size()-1; x>-1; x--) {
         	ToDoItem todoitem = new ToDoItem(itemNamesArray[x].toString());
-        	listController.addItem(todoitem, mainListNumber);
+        	listController.addItem(todoitem, listNumber);
     	} 
 	}
     
