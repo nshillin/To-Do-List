@@ -11,7 +11,6 @@ import ca.ualberta.cs.todolist.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -33,7 +32,7 @@ public class MainActivity extends Activity {
 	public int oppositeListNumber;	
 	public int listViewId;
 	public int itemCountViewId;
-	public ToDoListController listController;
+	public static ToDoListController listController;
 	public String spName;
 	public String oppositespName;
 	
@@ -81,9 +80,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    
-    
-
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -93,7 +89,25 @@ public class MainActivity extends Activity {
 	
 	
 	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		return super.onTouchEvent(event);
+	}
+	
+	
+
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		// TODO Auto-generated method stub
+		updateCount();
+		return super.dispatchTouchEvent(ev);
+	}
+
+
 	public void addItem(View view) {
+
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
     	textView.setText("");
@@ -101,6 +115,39 @@ public class MainActivity extends Activity {
     	storeInformation(mainListNumber, spName);
     	updateList();
     }
+	
+	public void archive(int position) {
+    	List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
+		List<ToDoItem> archivedToDoList = listController.getToDoList(oppositeListNumber);
+		
+    	ToDoItem currentItem = toDoList.get(position);
+		archivedToDoList.add(currentItem);
+		storeInformation(oppositeListNumber, oppositespName);
+		removeInformation(position);
+		toDoList.remove(currentItem);
+    }
+    
+	public void delete(int position) {
+    	List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
+    	
+		removeInformation(position);
+		toDoList.remove(position);
+		
+    }
+    
+    public void emailOne(int position) {
+
+		List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
+    	
+    	Intent emailIntent = new Intent(Intent.ACTION_SEND);
+		emailIntent.setType("memessage/rfc822");
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "To Do Item");
+		ToDoItem currentItem = toDoList.get(position);
+		emailIntent.putExtra(Intent.EXTRA_TEXT, currentItem.getName());
+		startActivity(Intent.createChooser(emailIntent, ""));
+    }
+    
+    
     
     public void storeInformation(int listNumber, String spName) {
 		SharedPreferences settings = this.getSharedPreferences(spName, 0);
@@ -123,6 +170,7 @@ public class MainActivity extends Activity {
     }
 	
 	public void retrieveInformation() {
+
 		SharedPreferences settings = this.getSharedPreferences(spName, 0);
     	Set<String> itemNames = settings.getStringSet("itemNames", new HashSet<String>());
     	String[] itemNamesArray = itemNames.toArray(new String[itemNames.size()]);
@@ -132,6 +180,8 @@ public class MainActivity extends Activity {
     	} 
 	}
     
+	
+	
     protected void itemLongClicked() {
 
     	ListView list = (ListView) findViewById(listViewId);
@@ -166,35 +216,6 @@ public class MainActivity extends Activity {
 		});
 	}
     
-    public void archive(int position) {
-    	List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
-		List<ToDoItem> archivedToDoList = listController.getToDoList(oppositeListNumber);
-		
-    	ToDoItem currentItem = toDoList.get(position);
-		archivedToDoList.add(currentItem);
-		storeInformation(oppositeListNumber, oppositespName);
-		removeInformation(position);
-		toDoList.remove(currentItem);
-    }
-    
-	public void delete(int position) {
-    	List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
-    	
-		removeInformation(position);
-		toDoList.remove(position);
-		
-    }
-    
-    public void emailOne(int position) {
-		List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
-    	
-    	Intent emailIntent = new Intent(Intent.ACTION_SEND);
-		emailIntent.setType("memessage/rfc822");
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "To Do Item");
-		ToDoItem currentItem = toDoList.get(position);
-		emailIntent.putExtra(Intent.EXTRA_TEXT, currentItem.getName());
-		startActivity(Intent.createChooser(emailIntent, ""));
-    }
     
     public void updateCount() {
     	TextView itemCount = (TextView) findViewById( itemCountViewId);
@@ -206,7 +227,6 @@ public class MainActivity extends Activity {
     	}
     	itemCount.setText("Items: "+ listController.getToDoList(mainListNumber).size() + "     Checked: " + checked + "     Unchecked: " + (listController.getToDoList(mainListNumber).size() - checked));
     }
-    
     
     public void updateList() {
     	updateCount();

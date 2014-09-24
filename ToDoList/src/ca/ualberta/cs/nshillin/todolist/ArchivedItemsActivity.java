@@ -11,6 +11,7 @@ import android.view.MenuItem;
 public class ArchivedItemsActivity extends MainActivity {
 
 	
+	@SuppressWarnings("static-access")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
