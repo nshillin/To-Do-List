@@ -53,7 +53,6 @@ public class MainActivity extends Activity {
         if (listController.getToDoList(oppositeListNumber).size() == 0) {
         	retrieveInformation(oppositespName, oppositeListNumber);
         }
-        
         listViewId  = R.id.ToDoList_ListView;
         itemCountViewId = R.id.itemCount_TextView;
     	updateList();
@@ -90,6 +89,7 @@ public class MainActivity extends Activity {
         }
         if (id == R.id.emailSelection_item) {
         	Intent emailSelectionScreen = new Intent(MainActivity.this, EmailSelectionActivity.class);
+        	emailSelectionScreen.putExtra("test", mainListNumber);
         	startActivity(emailSelectionScreen);
         }
         return super.onOptionsItemSelected(item);
@@ -99,6 +99,12 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		for (int x=0; x < listController.getToDoList(mainListNumber).size(); x++) {
+			listController.getToDoList(mainListNumber).get(x).changeSelected(false);
+    	}
+		for (int x=0; x < listController.getToDoList(oppositeListNumber).size(); x++) {
+			listController.getToDoList(oppositeListNumber).get(x).changeSelected(false);
+    	}
     	updateList();
 	}
 	
@@ -109,7 +115,7 @@ public class MainActivity extends Activity {
 		return super.dispatchTouchEvent(ev);
 	}
 
-
+	
 	public void addItem(View view) {
 
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
@@ -255,6 +261,15 @@ public class MainActivity extends Activity {
     }
     
     public void updateList() {
+    	updateCount();
+    	List<ToDoItem> toDoList;
+		toDoList = listController.getToDoList(mainListNumber);
+    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item,toDoList, mainListNumber);
+    	ListView list = (ListView) findViewById( listViewId);
+    	list.setAdapter(adapter);
+    }
+    
+    public void updateList2(View view) {
     	updateCount();
     	List<ToDoItem> toDoList;
 		toDoList = listController.getToDoList(mainListNumber);

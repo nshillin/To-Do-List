@@ -33,14 +33,13 @@ public final class R {
         public static final int checkBox=0x7f08000c;
         public static final int emailAll_item=0x7f080010;
         public static final int emailArchived_item=0x7f080011;
-        public static final int emailSelectionArchived_item=0x7f080012;
-        public static final int emailSelection_item=0x7f080017;
+        public static final int emailSelectionTitle_textView=0x7f080003;
+        public static final int emailSelection_item=0x7f080012;
         public static final int emailTodo_item=0x7f080016;
         public static final int email_Button=0x7f080006;
         public static final int email_Item=0x7f080015;
         public static final int email_item=0x7f08000f;
         public static final int emailcount_textView=0x7f080004;
-        public static final int emailselection_textView=0x7f080003;
         public static final int help_item=0x7f080013;
         public static final int help_textView=0x7f08000b;
         public static final int itemCount_TextView=0x7f08000a;

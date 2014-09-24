@@ -5,6 +5,7 @@ import java.util.List;
 import ca.ualberta.cs.todolist.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,12 +57,15 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 			}
 		});
 		checkBox.setChecked(currentItem.isChecked());
+		
+		if (currentItem.isSelected()) {
+			itemView.setBackgroundColor(Color.parseColor("#33B5E5"));
+		}
 	/*	
 		if (position == ToDoListController.getToDoList().size() -1) {
 			checkBox.setVisibility(View.INVISIBLE);
 		}
 		*/
-	//	itemView.setBackgroundColor(Color.CYAN);
 		
 		return itemView;
 	}

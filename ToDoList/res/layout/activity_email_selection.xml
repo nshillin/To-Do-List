@@ -9,7 +9,7 @@
     tools:context="ca.ualberta.cs.nshillin.todolist.EmailSelectionActivity" >
 
     <TextView
-        android:id="@+id/emailselection_textView"
+        android:id="@+id/emailSelectionTitle_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -21,8 +21,8 @@
         android:id="@+id/emailcount_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/emailselection_textView"
-        android:layout_below="@+id/emailselection_textView"
+        android:layout_alignLeft="@+id/emailSelectionTitle_textView"
+        android:layout_below="@+id/emailSelectionTitle_textView"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -43,6 +43,7 @@
         android:layout_alignLeft="@+id/selection_listView"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/selection_listView"
+        android:onClick="emailSelection"
         android:text="Email Items" />
 
 </RelativeLayout>
