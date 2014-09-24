@@ -8,6 +8,7 @@
             <item android:id="@+id/emailTodo_item" android:title="Email To Do"/><item android:id="@+id/emailSelection_item" android:title="Email Selection"/>
             
         </menu>
-    </item>
+    </item><item android:id="@+id/help_item" android:title="How To Do"></item>
+    
 
 </menu>

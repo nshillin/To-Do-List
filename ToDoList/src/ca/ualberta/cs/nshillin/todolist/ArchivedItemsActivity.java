@@ -51,6 +51,10 @@ public class ArchivedItemsActivity extends MainActivity {
 			this.setResult(RESULT_OK);
 			this.finish();
 		} 
+	/*	if (id == R.id.help_item) {
+        	Intent settingsScreen = new Intent(ArchivedItemsActivity.this, SettingsActivity.class);
+        	startActivity(settingsScreen);
+        } */
 		return super.onOptionsItemSelected(item);
 	}
 	

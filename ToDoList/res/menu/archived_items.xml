@@ -5,9 +5,10 @@
         <menu>
             <item android:id="@+id/emailAll_item" android:title="Email All"/>
             <item android:id="@+id/emailArchived_item" android:title="Email Archived"/>
-            <item android:id="@+id/emailSelection_item" android:title="Email Selection"/>
+            <item android:id="@+id/emailSelectionArchived_item" android:title="Email Selection"/>
         </menu>
-    </item>
+    </item><item android:id="@+id/help_item" android:title="How To Do"></item>
+    
     
 
 </menu>

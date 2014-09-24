@@ -28,8 +28,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="ca.ualberta.cs.nshillin.todolist.SettingsActivity"
             android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name=".EmailSelectionActivity"
+            android:label="@string/title_activity_email_selection" >
         </activity>
     </application>
 
