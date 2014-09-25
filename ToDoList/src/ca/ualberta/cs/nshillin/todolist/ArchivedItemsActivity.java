@@ -19,9 +19,14 @@ public class ArchivedItemsActivity extends MainActivity {
 		
 		mainListNumber = 2;
         oppositeListNumber = 1;
-        spName = "ArchivedToDoItems";
-        oppositespName = "ToDoItems";
-		
+       
+        oppositespItemName = "ToDoItem_";
+        oppositespSize = "ToDoSize";
+        oppositespCheckItemName = "ToDoCheck_";
+        spItemName = "ArchivedToDoItem_";
+        spSize = "ArchivedSize";
+        spCheckItemName = "ArchivedCheck_";
+        
 		optionsArray[0] = "UnArchive";
 		listViewId  = R.id.ArchivedItemList_ListView;
         itemCountViewId = R.id.itemCount_textView;

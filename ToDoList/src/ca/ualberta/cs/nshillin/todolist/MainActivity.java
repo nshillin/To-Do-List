@@ -2,9 +2,7 @@ package ca.ualberta.cs.nshillin.todolist;
 
 
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import ca.ualberta.cs.todolist.R;
 
@@ -13,7 +11,6 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,9 +30,13 @@ public class MainActivity extends Activity {
 	public int listViewId;
 	public int itemCountViewId;
 	public static ToDoListController listController;
-	public String spName;
-	public String oppositespName;
-	
+	public String spItemName;
+	public String spSize;
+	public String spCheckItemName;
+	public String oppositespItemName;
+	public String oppositespSize;
+	public String oppositespCheckItemName;
+
 	
 	
     @Override
@@ -45,14 +46,21 @@ public class MainActivity extends Activity {
         
         mainListNumber = 1;
         oppositeListNumber = 2;
-        spName = "ToDoItems";
-        oppositespName = "ArchivedToDoItems";
+        spItemName = "ToDoItem_";
+        spSize = "ToDoSize";
+        spCheckItemName = "ToDoCheck_";
+        oppositespItemName = "ArchivedToDoItem_";
+        oppositespSize = "ArchivedSize";
+        oppositespCheckItemName = "ArchivedCheck_";
         if (listController.getToDoList(mainListNumber).size() == 0) {
-        	retrieveInformation(spName, mainListNumber);
+        	retrieveInformation(mainListNumber, spItemName, spSize);
+        	retrieveCheckInformation(mainListNumber, spCheckItemName);
         }
         if (listController.getToDoList(oppositeListNumber).size() == 0) {
-        	retrieveInformation(oppositespName, oppositeListNumber);
-        }
+        	retrieveInformation(oppositeListNumber, oppositespItemName, oppositespSize);
+        	retrieveCheckInformation(oppositeListNumber, oppositespCheckItemName);
+
+        } 
         listViewId  = R.id.ToDoList_ListView;
         itemCountViewId = R.id.itemCount_TextView;
     	updateList();
@@ -108,13 +116,6 @@ public class MainActivity extends Activity {
     	updateList();
 	}
 	
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		// TODO Auto-generated method stub
-		updateCount();
-		return super.dispatchTouchEvent(ev);
-	}
-
 	
 	public void addItem(View view) {
 
@@ -122,7 +123,7 @@ public class MainActivity extends Activity {
     	ToDoItem todoitem = new ToDoItem(textView.getText().toString());
     	textView.setText("");
     	listController.addItem(todoitem, mainListNumber);
-    	storeInformation(mainListNumber, spName);
+    	storeInformation(mainListNumber, spItemName, spSize);
     	updateList();
     }
 	
@@ -132,17 +133,16 @@ public class MainActivity extends Activity {
 		
     	ToDoItem currentItem = toDoList.get(position);
 		archivedToDoList.add(currentItem);
-		storeInformation(oppositeListNumber, oppositespName);
-		removeInformation(position);
+		storeInformation(oppositeListNumber, oppositespItemName, oppositespSize);
 		toDoList.remove(currentItem);
+		removeInformation(position, mainListNumber);
     }
     
 	public void delete(int position) {
     	List<ToDoItem> toDoList = listController.getToDoList(mainListNumber);
     	
-		removeInformation(position);
 		toDoList.remove(position);
-		
+		removeInformation(position, mainListNumber);		
     }
     
     public void emailOne(int position) {
@@ -181,35 +181,50 @@ public class MainActivity extends Activity {
 		startActivity(Intent.createChooser(email, ""));
     }
     
-    public void storeInformation(int listNumber, String spName) {
-		SharedPreferences settings = this.getSharedPreferences(spName, 0);
+    public void storeInformation(int listNumber, String itemName, String sizeName) {
+    	SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
     	SharedPreferences.Editor editor = settings.edit();
-    	Set<String> itemNames = new HashSet<String>(settings.getStringSet("itemNames", new HashSet<String>()));
-    	ToDoItem todoitem = listController.getToDoList(listNumber).get(listController.getToDoList(listNumber).size()-1);
-    	itemNames.add(todoitem.getName());
-    	editor.putStringSet("itemNames", itemNames);
+    	editor.putInt(sizeName, listController.getToDoList(listNumber).size());
+    	editor.putString(itemName+(listController.getToDoList(listNumber).size()-1), listController.getToDoList(listNumber).get(listController.getToDoList(listNumber).size()-1).getName());
     	editor.commit();
-    }
+
+	}
     
-    public void removeInformation(int position) {
-		SharedPreferences settings = this.getSharedPreferences(spName, 0);
+    public void removeInformation(int position, int listNumber) {
+		SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
     	SharedPreferences.Editor editor = settings.edit();
-    	Set<String> itemNames = new HashSet<String>(settings.getStringSet("itemNames", new HashSet<String>()));
-    	ToDoItem todoitem = listController.getToDoList(mainListNumber).get(position);
-    	itemNames.remove(todoitem.getName());
-    	editor.putStringSet("itemNames", itemNames);
+		int size = listController.getToDoList(listNumber).size();
+    	editor.putInt(spSize, size);
+    	for (int x=0; x<size; x++) {
+        	editor.putString(spItemName+x, listController.getToDoList(listNumber).get(x).getName());
+    	}
     	editor.commit();
     }
 	
-	public void retrieveInformation(String name, int listNumber) {
+	public void retrieveInformation(int listNumber, String itemName, String sizeName) {
+		SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
+		int size = settings.getInt(sizeName, 0);
+    	for (int x=0; x<size; x++) {
+    		listController.addItem(new ToDoItem(settings.getString(itemName+x,"")), listNumber);
+    	}
+	}
+	
+	public void storeCheckInformation(int listNumber, String itemName) {
+		SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
+    	SharedPreferences.Editor editor = settings.edit();
+    	for (int x=0; x<listController.getToDoList(listNumber).size(); x++) {
+    		editor.putBoolean(itemName+x, listController.getToDoList(listNumber).get(x).isChecked());
+    		editor.commit();
+    	}
+	}
 
-		SharedPreferences settings = this.getSharedPreferences(name, 0);
-    	Set<String> itemNames = settings.getStringSet("itemNames", new HashSet<String>());
-    	String[] itemNamesArray = itemNames.toArray(new String[itemNames.size()]);
-    	for (int x=itemNames.size()-1; x>-1; x--) {
-        	ToDoItem todoitem = new ToDoItem(itemNamesArray[x].toString());
-        	listController.addItem(todoitem, listNumber);
-    	} 
+	
+	public void retrieveCheckInformation(int listNumber, String itemName) {
+		
+		SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
+    	for (int x=0; x<listController.getToDoList(listNumber).size(); x++) {
+    		listController.getToDoList(listNumber).get(x).changeChecked(settings.getBoolean(itemName+x, true));
+    	}
 	}
     
 	
@@ -250,6 +265,7 @@ public class MainActivity extends Activity {
     
     
     public void updateCount() {
+    	storeCheckInformation(mainListNumber, spCheckItemName);
     	TextView itemCount = (TextView) findViewById( itemCountViewId);
     	int checked = 0;
     	for (int x=0; x < listController.getToDoList(mainListNumber).size(); x++) {

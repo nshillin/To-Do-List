@@ -54,7 +54,7 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 				ToDoItem currentItem = toDoList.get(position);
 				currentItem.changeChecked(checkBox.isChecked()); 
 				MainActivity mainActivity = ((MainActivity) context);
-				mainActivity.updateList();
+				mainActivity.updateCount();
 				
 			}
 		});
@@ -63,11 +63,6 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 		if (currentItem.isSelected()) {
 			itemView.setBackgroundColor(Color.parseColor("#33B5E5"));
 		}
-	/*	
-		if (position == ToDoListController.getToDoList().size() -1) {
-			checkBox.setVisibility(View.INVISIBLE);
-		}
-		*/
 		
 		return itemView;
 	}
