@@ -53,6 +53,8 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 				List<ToDoItem> toDoList = ToDoListController.getToDoList(listNumber);
 				ToDoItem currentItem = toDoList.get(position);
 				currentItem.changeChecked(checkBox.isChecked()); 
+				MainActivity mainActivity = ((MainActivity) context);
+				mainActivity.updateList();
 				
 			}
 		});

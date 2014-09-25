@@ -90,7 +90,7 @@ public class EmailSelectionActivity extends Activity {
 				numberSelected++;
 			}
     	}
-    	itemCount.setText("Items Selected: " + numberSelected);
+    	itemCount.setText("Items: " + listController.getToDoList(listNumber).size() + "     Items Selected: " + numberSelected);
     }
     
     public void updateList() {

@@ -3,9 +3,9 @@
 
     <string name="app_name">nshillin-todolist</string>
     <string name="title_activity_archived_items">nshillin-todolist</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">nshillin-todolist</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_email_selection">EmailSelectionActivity</string>
+    <string name="title_activity_email_selection">nshillin-todolist</string>
 
 </resources>

@@ -268,13 +268,4 @@ public class MainActivity extends Activity {
     	ListView list = (ListView) findViewById( listViewId);
     	list.setAdapter(adapter);
     }
-    
-    public void updateList2(View view) {
-    	updateCount();
-    	List<ToDoItem> toDoList;
-		toDoList = listController.getToDoList(mainListNumber);
-    	ArrayAdapter<ToDoItem> adapter = new ToDoAdapter( this, R.layout.list_item,toDoList, mainListNumber);
-    	ListView list = (ListView) findViewById( listViewId);
-    	list.setAdapter(adapter);
-    }
 }
