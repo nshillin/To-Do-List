@@ -61,6 +61,12 @@ public class MainActivity extends Activity {
         	retrieveCheckInformation(oppositeListNumber, oppositespCheckItemName);
 
         } 
+        
+    	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
+    	SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
+    	textView.setText(settings.getString("TextBox", ""));
+    	textView.setSelection(textView.getText().length());
+    	
         listViewId  = R.id.ToDoList_ListView;
         itemCountViewId = R.id.itemCount_TextView;
     	updateList();
@@ -117,6 +123,21 @@ public class MainActivity extends Activity {
 	}
 	
 	
+	
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		
+    	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
+    	String text = textView.getText().toString();
+    	SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.putString("TextBox", text);
+    	editor.commit();
+	}
+
+
 	public void addItem(View view) {
 
     	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
