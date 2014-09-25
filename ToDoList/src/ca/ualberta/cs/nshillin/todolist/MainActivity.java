@@ -133,6 +133,7 @@ public class MainActivity extends Activity {
 		
     	ToDoItem currentItem = toDoList.get(position);
 		archivedToDoList.add(currentItem);
+		storeCheckInformation(oppositeListNumber, oppositespCheckItemName);
 		storeInformation(oppositeListNumber, oppositespItemName, oppositespSize);
 		toDoList.remove(currentItem);
 		removeInformation(position, mainListNumber);
