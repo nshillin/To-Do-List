@@ -1,3 +1,4 @@
+//	Copyright (c) 2014 Brian Hardy (For more information see README)
 //     Copyright (C) 2014 Noah Shillington
 //	   Full notice in MainActivity.java
 
