@@ -24,8 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ----------------------------------------------------------
 
-"CMPUT301: Saga of Student Picker": https://www.youtube.com/playlist?list=PL240uJOh_Vb4PtMZ0f7N8ACYkCLv0673O
 Abram Hindle - Creative Commons Attribution license (reuse allowed)
+"CMPUT301: Saga of Student Picker": https://www.youtube.com/playlist?list=PL240uJOh_Vb4PtMZ0f7N8ACYkCLv0673O
 
 ----------------------------------------------------------
 
@@ -34,10 +34,9 @@ ToDoAdapter class Attribution:
 ----------------------------------------------------------
  (skeleton of class taken from)
 
+Brian Hardy, April 22, 2014
 "Customizing Android ListView Rows by Subclassing": 
 http://www.bignerdranch.com/blog/customizing-android-listview-rows-subclassing/
-Brian Hardy, April 22, 2014
-
 https://github.com/bignerdranch/android-listview-custom-view
 
 The MIT License (MIT)
