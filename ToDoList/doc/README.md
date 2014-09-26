@@ -30,7 +30,8 @@ Abram Hindle - Creative Commons Attribution license (reuse allowed)
 ----------------------------------------------------------
 
 
-ToDoAdapter class Attribution (skeleton of class taken from):
+ToDoAdapter class Attribution:
+ (skeleton of class taken from)
 
 "Customizing Android ListView Rows by Subclassing": 
 http://www.bignerdranch.com/blog/customizing-android-listview-rows-subclassing/
