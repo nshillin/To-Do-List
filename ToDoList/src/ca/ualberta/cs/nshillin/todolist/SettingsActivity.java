@@ -1,3 +1,11 @@
+//     Copyright (C) 2014 Noah Shillington
+//	   Full notice in MainActivity.java
+
+/*
+ * This activity is where the help information is stored. It was also going to serve as a way of clearing everything in
+ * the lists, but I didn't have enough time.
+ */
+
 package ca.ualberta.cs.nshillin.todolist;
 
 import ca.ualberta.cs.todolist.R;

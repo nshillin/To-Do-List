@@ -1,3 +1,12 @@
+//     Copyright (C) 2014 Noah Shillington
+//	   Full notice in MainActivity.java
+
+/*EmailSelectionActivity is very similar to MainActivity, but has only a small portion of the methods.
+ * This activity is in charge of allowing the user to select the items that they wish to email, if the user is
+ * coming from the archived list, all of the items will be from the archived list, the same goes for the todo list.
+ */
+
+
 package ca.ualberta.cs.nshillin.todolist;
 
 import java.util.List;

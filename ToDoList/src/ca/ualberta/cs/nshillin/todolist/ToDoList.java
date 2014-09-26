@@ -1,3 +1,11 @@
+//     Copyright (C) 2014 Noah Shillington
+//	   Full notice in MainActivity.java
+
+/*
+ * this is the actual todo list class, only two instances of this class are actually used in the application and they are both
+ * called from the ToDoListController. The lists are filled with ToDoItem's.
+ */
+
 package ca.ualberta.cs.nshillin.todolist;
 
 import java.util.ArrayList;
@@ -18,9 +26,5 @@ public class ToDoList {
 	
 	public void addItem(ToDoItem todoitem) {
 		toDoList.add(todoitem);	
-	}
-	
-	public void removeItem(ToDoItem todoitem) {
-		toDoList.remove(todoitem);
 	}
 }

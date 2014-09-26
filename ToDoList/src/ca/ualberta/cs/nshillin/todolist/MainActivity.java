@@ -1,3 +1,55 @@
+/*
+	An android application to keep todo items in, items can be added, deleted, checked, archived, and emailed.
+    Copyright (C) 2014 Noah Shillington
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+/*
+ * This is the activity that does most of the work in the application.
+ * The user can add, delete, email, and archive items from this page. 
+ * The page also displays the current number of items, checked and unchecked.
+ * 
+ * addItem is called when the user presses the add button. The text from the textbox is then added as a new item.
+ * 
+ * itemLongClicked is used to open a dialog with three options, when an item is long clicked.
+ * archive, delete, and emailOne are called when the user selects the appropriate button after long clicking on an object.
+ * archive deletes the item from the list and adds the same item to the archived list.
+ * delete removes the item from the list.
+ * emailOne creates an email intent with the selected item.
+ * 
+ * emailAll is used when Email>Email All or Email>Email To Do is selected from the menu. Depending on what's selected, it either
+ * creates an email intent with just the items from the todo list, or creates an intent with the items from the todo list as
+ * well as the items from the archived todo list
+ * 
+ * storeInformation, removeInformation, retrieveInformation, storeCheckInformation, and retrieveCheckInformation are all in charge
+ * of storing the user's todo list data. 
+ * storeInformation is called when an item is added, and adds the item to SharedPrefs
+ * removeInformation is called when archive or delete are called and updates everything in SharedPrefs, accounting for the removed item
+ * retrieveInformation is called when the app starts and grabs all of the item names from SharedPrefs
+ * storeCheckInformation is called when an item is checked off and updates SharedPrefs with this information
+ * retrieveCheckInformation is called when the app starts and adds checkmark information to the todo list
+ * 
+ * updateCount updates the textbox that displays the number of items, checked, and unchecked and is called when the list updates
+ * or when an item is checked.
+ * updateList updates the list by sending the todo list into ToDoAdapter.
+ * 
+ * onResume updates the list with any unarchived objects that may have since been added to the ToDoListController.
+ */
+
+
 package ca.ualberta.cs.nshillin.todolist;
 
 
@@ -61,18 +113,12 @@ public class MainActivity extends Activity {
         	retrieveCheckInformation(oppositeListNumber, oppositespCheckItemName);
 
         } 
-        
-    	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
-    	SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
-    	textView.setText(settings.getString("TextBox", ""));
-    	textView.setSelection(textView.getText().length());
     	
         listViewId  = R.id.ToDoList_ListView;
         itemCountViewId = R.id.itemCount_TextView;
     	updateList();
     	itemLongClicked();
     }
-
     
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,21 +168,6 @@ public class MainActivity extends Activity {
     	updateList();
 	}
 	
-	
-	
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
-		super.onStop();
-		
-    	AutoCompleteTextView textView = (AutoCompleteTextView) findViewById( R.id.addItem_TextView);
-    	String text = textView.getText().toString();
-    	SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
-    	SharedPreferences.Editor editor = settings.edit();
-    	editor.putString("TextBox", text);
-    	editor.commit();
-	}
-
 
 	public void addItem(View view) {
 
@@ -203,6 +234,7 @@ public class MainActivity extends Activity {
 		startActivity(Intent.createChooser(email, ""));
     }
     
+    
     public void storeInformation(int listNumber, String itemName, String sizeName) {
     	SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
     	SharedPreferences.Editor editor = settings.edit();
@@ -240,7 +272,6 @@ public class MainActivity extends Activity {
     	}
 	}
 
-	
 	public void retrieveCheckInformation(int listNumber, String itemName) {
 		
 		SharedPreferences settings = this.getSharedPreferences("ToDoList", 0);
@@ -249,7 +280,6 @@ public class MainActivity extends Activity {
     	}
 	}
     
-	
 	
     protected void itemLongClicked() {
 
@@ -284,7 +314,6 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
-    
     
     public void updateCount() {
     	storeCheckInformation(mainListNumber, spCheckItemName);

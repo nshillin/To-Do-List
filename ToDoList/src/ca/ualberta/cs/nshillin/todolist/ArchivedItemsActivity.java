@@ -1,3 +1,18 @@
+//     Copyright (C) 2014 Noah Shillington
+//	   Full notice in MainActivity.java
+
+/*
+ * This Activity is a slightly modified version of MainActivity.
+ * It displays all of the archived items, and allows the user to check, delete, UnArchive, and email items.
+ * All of the differences between this and the main class are implemented in the three methods below.
+ * onCreate does most of the implementing; it replaces the regular todolist with the archived todolist and also
+ * changes anything that needs to be reversed, such as archive becomes unarchive and so on.
+ * The two other methods switch the menu to fit with the archived items. The menu item for opening up the archived to do list
+ * is now to open up the regular to do list and so on. 
+ * 
+ */
+
+
 package ca.ualberta.cs.nshillin.todolist;
 
 
@@ -49,6 +64,7 @@ public class ArchivedItemsActivity extends MainActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.todoList_item) {
+			
 			this.finish();
 		} 
 		

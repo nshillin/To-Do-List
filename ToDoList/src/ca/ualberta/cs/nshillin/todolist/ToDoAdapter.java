@@ -1,3 +1,11 @@
+//     Copyright (C) 2014 Noah Shillington
+//	   Full notice in MainActivity.java
+
+/*
+ * This is the class that organizes all of the list data, it initiates all of the items and check boxes.
+ * If a checkbox is clicked, this updates the list with the information and calls the updateCount method of the MainActivity.
+ */
+
 package ca.ualberta.cs.nshillin.todolist;
 
 import java.util.List;
@@ -45,7 +53,6 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 		textView.setText(currentItem.getName());
 		
 		final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
-	//	final Context context = this.context;
 		checkBox.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -53,9 +60,10 @@ class ToDoAdapter extends ArrayAdapter<ToDoItem> {
 				List<ToDoItem> toDoList = ToDoListController.getToDoList(listNumber);
 				ToDoItem currentItem = toDoList.get(position);
 				currentItem.changeChecked(checkBox.isChecked()); 
-				MainActivity mainActivity = ((MainActivity) context);
-				mainActivity.updateCount();
-				
+				try {
+					MainActivity mainActivity = ((MainActivity) context);
+					mainActivity.updateCount();
+				} catch (Exception e) {}
 			}
 		});
 		checkBox.setChecked(currentItem.isChecked());
